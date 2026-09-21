@@ -256,6 +256,14 @@ ul {
     font-weight: 700;
     font-family: var(--font-heading);
     color: var(--color-ink);
+    will-change: transform;
+    transition: box-shadow 0.2s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .hero-card {
+        box-shadow: 0 14px 34px rgba(0, 0, 0, 0.16);
+    }
 }
 
 .hero-card.card-1 {

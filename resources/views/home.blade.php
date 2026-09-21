@@ -15,13 +15,74 @@
                     <a href="{{ route('services') }}" class="btn btn-outline">View Services</a>
                 </div>
             </div>
-            <div class="hero-art" aria-hidden="true">
-                <div class="hero-card card-1">Brand Identity</div>
-                <div class="hero-card card-2">Web Design</div>
-                <div class="hero-card card-3">Marketing Collateral</div>
+            <div class="hero-art" data-parallax aria-hidden="true">
+                <div class="hero-card card-1" data-parallax-item data-depth="26">Brand Identity</div>
+                <div class="hero-card card-2" data-parallax-item data-depth="46">Web Design</div>
+                <div class="hero-card card-3" data-parallax-item data-depth="34">Marketing Collateral</div>
             </div>
         </div>
     </section>
+
+    <script>
+        (function () {
+            var field = document.querySelector('[data-parallax]');
+            if (!field) return;
+
+            var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var hasFinePointer = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+            if (reduceMotion || !hasFinePointer) return;
+
+            var items = Array.prototype.slice.call(field.querySelectorAll('[data-parallax-item]')).map(function (el) {
+                return { el: el, depth: parseFloat(el.getAttribute('data-depth')) || 20, x: 0, y: 0, tx: 0, ty: 0 };
+            });
+
+            var targetX = 0;
+            var targetY = 0;
+            var raf = null;
+
+            function onPointerMove(e) {
+                var rect = field.getBoundingClientRect();
+                // Normalized pointer position relative to the field's center, -0.5..0.5
+                targetX = ((e.clientX - rect.left) / rect.width) - 0.5;
+                targetY = ((e.clientY - rect.top) / rect.height) - 0.5;
+                items.forEach(function (item) {
+                    item.tx = targetX * item.depth;
+                    item.ty = targetY * item.depth;
+                });
+                if (!raf) raf = requestAnimationFrame(tick);
+            }
+
+            function onPointerLeave() {
+                targetX = 0;
+                targetY = 0;
+                items.forEach(function (item) {
+                    item.tx = 0;
+                    item.ty = 0;
+                });
+                if (!raf) raf = requestAnimationFrame(tick);
+            }
+
+            // Ease each card's position toward its target so movement feels fluid,
+            // not a 1:1 jump to the cursor, and each card settles at its own rate.
+            function tick() {
+                var stillMoving = false;
+
+                items.forEach(function (item) {
+                    var dx = item.tx - item.x;
+                    var dy = item.ty - item.y;
+                    item.x += dx * 0.08;
+                    item.y += dy * 0.08;
+                    item.el.style.transform = 'translate3d(' + item.x.toFixed(2) + 'px, ' + item.y.toFixed(2) + 'px, 0)';
+                    if (Math.abs(dx) > 0.05 || Math.abs(dy) > 0.05) stillMoving = true;
+                });
+
+                raf = stillMoving ? requestAnimationFrame(tick) : null;
+            }
+
+            field.addEventListener('pointermove', onPointerMove);
+            field.addEventListener('pointerleave', onPointerLeave);
+        })();
+    </script>
 
     <section class="stats">
         <div class="container stats-grid">
