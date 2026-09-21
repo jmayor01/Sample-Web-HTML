@@ -495,6 +495,74 @@ ul {
     border: 1px solid #a7f3d0;
 }
 
+.alert-error {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+/* Auth pages */
+.auth-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 440px;
+}
+
+.auth-switch {
+    text-align: center;
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+    font-size: 0.95rem;
+}
+
+.auth-switch a {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.form-row-inline {
+    flex-direction: row;
+    align-items: center;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500 !important;
+    cursor: pointer;
+}
+
+.checkbox-label input {
+    width: auto;
+}
+
+/* Nav auth controls */
+.nav-logout-form {
+    display: inline-flex;
+}
+
+.nav-link-btn {
+    background: none;
+    border: none;
+    font: inherit;
+    font-weight: 500;
+    color: var(--color-ink);
+    cursor: pointer;
+    padding: 0;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-link-btn:hover {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+}
+
 /* Footer */
 .site-footer {
     background: var(--color-ink);
@@ -601,6 +669,17 @@ ul {
     .site-nav a.nav-cta {
         margin-top: 8px;
         text-align: center;
+    }
+
+    .nav-logout-form {
+        width: 100%;
+    }
+
+    .nav-link-btn {
+        width: 100%;
+        text-align: left;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--color-border) !important;
     }
 
     .nav-toggle:checked ~ .site-nav {

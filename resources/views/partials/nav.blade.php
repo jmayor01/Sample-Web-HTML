@@ -15,7 +15,17 @@
             <a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'active' : '' }}">About</a>
             <a href="{{ route('services') }}" class="{{ request()->routeIs('services') ? 'active' : '' }}">Services</a>
             <a href="{{ route('contact') }}" class="{{ request()->routeIs('contact') ? 'active' : '' }}">Contact</a>
-            <a href="{{ route('contact') }}" class="btn btn-primary nav-cta">Get a Quote</a>
+
+            @auth
+                <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
+                <form method="POST" action="{{ route('logout') }}" class="nav-logout-form">
+                    @csrf
+                    <button type="submit" class="nav-link-btn">Log Out</button>
+                </form>
+            @else
+                <a href="{{ route('login') }}" class="{{ request()->routeIs('login') ? 'active' : '' }}">Log In</a>
+                <a href="{{ route('register') }}" class="btn btn-primary nav-cta">Sign Up</a>
+            @endauth
         </nav>
     </div>
 </header>
